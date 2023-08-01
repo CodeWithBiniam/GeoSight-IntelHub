@@ -1,0 +1,27 @@
+o	Vehicles with GPS and video feed capabilities: These are the sources of your raw data. Each vehicle would have a unique identifier (device_id).
+                                                    |
+                                                    |
+                                                    V
+o	Data Ingestion Layer (Apache Kafka): 
+
+	Kafka Producer 1: Handles ingestion of GPS data from vehicles and publishes it to Kafka Topic 1. 
+	Kafka Producer 2: Handles video feed data, splits it into frames, associates each frame with corresponding GPS data based on timestamp, and publishes this data to Kafka Topic 2.
+                                                    |
+                                                    |
+                                                    V
+o	Real-Time Processing Layer (Apache Flink/Storm):
+
+	Kafka Consumer 1: Subscribes to Kafka Topic 1 and consumes GPS data for real-time processing.
+	Kafka Consumer 2: Subscribes to Kafka Topic 2 and consumes video feed data for real-time processing.
+                                                    |
+                                                   	|
+    				                                V
+o	API Layer (Flask/Django or Spring Boot):
+
+	Processes the output from the Real-time Processing Layer and exposes the data via RESTful APIs for consumption by the Front-End Application.
+      				                                |
+    			 	                                |
+      				                                V
+o	Front-End Application (React, Angular, Vue):
+
+	Consumes data from the APIs and presents an interactive map-based interface for traffic conditions. This interface could also offer route planning features, taking into account current traffic conditions and congestion predictions
